@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+  <link rel="stylesheet" href="StyleSheet.css">
+  <body>
+    <div class="container">
+      
+      <div class="center">
+        <a href="ChatPage.html">
+          <button class="button2">Return</button>
+        </a>
+        <input id= "userKey" class="field" type="text" placeholder="enter username"/>
+        <button id="EnterKey" class="button2">Search</button>
+      </div>
+      <h2 id="fullKey"> </h1>
+      <h2 id="emailKey"> </h2>
+      <h2 id="phoneKey"> </h2>
+      <h2 id="majorKey"> </h2>
+      <h2 id="credKey"> </h2>
+      
+    </div>
+
+    <script type="module">
+      // Import the functions you need from the SDKs you need
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js";
+      // TODO: Add SDKs for Firebase products that you want to use
+      // https://firebase.google.com/docs/web/setup#available-libraries
+  
+      // Your web app's Firebase configuration
+      const firebaseConfig = {
+        apiKey: "AIzaSyCO3_sLIR5XeJcWiQ65I2scoeLibxWDCJs",
+        authDomain: "pairemapp.firebaseapp.com",
+        databaseURL: "https://pairemapp-default-rtdb.firebaseio.com",
+        projectId: "pairemapp",
+        storageBucket: "pairemapp.appspot.com",
+        messagingSenderId: "54376945676",
+        appId: "1:54376945676:web:e6b0bc5d80ff975b967629"
+      };
+  
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      import {getDatabase, ref, get, set, child, update, remove}
+      from "https://www.gstatic.com/firebasejs/9.17.1/firebase-database.js";
+  
+      const database = getDatabase();
+      var userKey = document.getElementById('userKey');
+      var fullKey = document.getElementById('fullKey');
+      var emailKey = document.getElementById('emailKey');
+      var phoneKey = document.getElementById('phoneKey');
+      var majorKey = document.getElementById('majorKey');
+      var credKey = document.getElementById('credKey');
+      var EnterKey = document.getElementById('EnterKey');
+
+
+    function FindData(){
+      const dbref = ref(database);
+      // const fullKey = document.getElementByID('fullKey');
+      // const newFullKey =document.createElement("text");
+      
+      get(child(dbref, "User/" + userKey.value))
+      .then((snapshot)=>{
+          if(snapshot.exists()){
+              fullKey.innerHTML = snapshot.val().firstName + ' ' + snapshot.val().lastName;;
+              emailKey.innerHTML = snapshot.val().email;
+              phoneKey.innerHTML = snapshot.val().phone;
+              majorKey.innerHTML = snapshot.val().major;
+              credKey.innerHTML = snapshot.val().cred;
+          }
+          else{
+              alert("User not found");
+          }
+      })
+      .catch((error)=>{
+        alert(error);
+      }
+
+      )
+  }
+
+  EnterKey.addEventListener('click',FindData);
+
+    </script>
+  </body>
+</html>
+
+
+

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="StyleSheet.css">
+  </head>
+
+  <body>
+    <div class="container">
+        <h1>Edit your personal information!</h1>
+        <h3>Enter user and password</h3>
+      <div>
+
+        <div class="center">
+            <input id="userKey" class="field" type="text" placeholder="username" />
+          </div>
+        <div class="center">
+            <input id="passKey" class="field" type="text" placeholder="password" />
+          </div>
+        <div class="center">
+          <input id="firstKey" class="field" type="text" placeholder="first name" />
+        </div>
+
+        <div class="center">
+          <input id="lastKey" class="field" type="text" placeholder="last name" />
+        </div>
+        <div class="center">
+          <input id="emailKey" class="field" type="text" placeholder="email" />
+        </div>
+
+        <div class="center">
+          <input id="phoneKey" class="field" type="text" placeholder="phone number" />
+        </div>
+
+        <div class="center">
+          <input id="majorKey" class="field" type="text" placeholder="major" />
+        </div>
+
+        <div class="center">
+            <input id="credKey" class="field" type="text" placeholder="List Your Credentials" />
+          </div>
+
+        <div class="center">
+          <button id="submitKey" class="button">Update</button>
+        </div>
+
+      </div>
+    </div>
+
+    <script type="module">
+      // Import the functions you need from the SDKs you need
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js";
+      // TODO: Add SDKs for Firebase products that you want to use
+      // https://firebase.google.com/docs/web/setup#available-libraries
+
+      // Your web app's Firebase configuration
+      const firebaseConfig = {
+        apiKey: "AIzaSyCO3_sLIR5XeJcWiQ65I2scoeLibxWDCJs",
+        authDomain: "pairemapp.firebaseapp.com",
+        databaseURL: "https://pairemapp-default-rtdb.firebaseio.com",
+        projectId: "pairemapp",
+        storageBucket: "pairemapp.appspot.com",
+        messagingSenderId: "54376945676",
+        appId: "1:54376945676:web:e6b0bc5d80ff975b967629"
+      };
+
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      import {getDatabase, ref, get, set, child, update, remove}
+      from "https://www.gstatic.com/firebasejs/9.17.1/firebase-database.js";
+
+      const database = getDatabase();
+      var submitKey = document.querySelector("#submitKey");
+      var userKey = document.querySelector("#userKey");
+      var passKey = document.querySelector("#passKey");
+      var firstKey = document.querySelector("#firstKey");
+      var lastKey = document.querySelector("#lastKey");
+      var emailKey = document.querySelector("#emailKey");
+      var phoneKey = document.querySelector("#phoneKey");
+      var majorKey = document.querySelector("#majorKey");
+      var credKey = document.querySelector("#credKey");
+      function UpdateData(){
+        const dbref = ref(database);
+
+        get(child(dbref, "User/" + userKey.value))
+        .then((snapshot)=>{
+          if(snapshot.exists()){
+              if(passKey.value == snapshot.val().password){
+                alert("Inofrmation Updated");
+                update(ref(database, "User/" + userKey.value),{
+                    firstName: firstKey.value,
+                    lastName: lastKey.value,
+                    email: emailKey.value,
+                    phone: phoneKey.value,
+                    major: majorKey.value,
+                    cred: credKey.value
+                })
+
+              }
+          }
+          else{
+              alert("User not found");
+          }
+      })
+      .catch((error)=>{
+        alert(error);
+      })
+      
+
+
+      } 
+
+      submitKey.addEventListener('click',UpdateData);
+
+    </script>
+  </body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="StyleSheet.css">
+  </head>
+  <body>
+    <div class="container">
+      <div>
+        <div class="center">
+          <input id="firstKey" class="field" type="text" placeholder="first name" />
+        </div>
+
+        <div class="center">
+          <input id="lastKey" class="field" type="text" placeholder="last name" />
+        </div>
+
+        <div class="center">
+          <input id="userKey" class="field" type="text" placeholder="username" />
+        </div>
+
+        <div class="center">
+          <input id="emailKey" class="field" type="text" placeholder="email" />
+        </div>
+
+        <div class="center">
+          <input id="phoneKey" class="field" type="text" placeholder="phone number" />
+        </div>
+
+        <div class="center">
+          <input id="passKey" class="field" type="text" placeholder="password" />
+        </div>
+
+        <div class="center">
+          <button id="submitKey" class="button">Sign Up</button>
+        </div>
+
+        <div class="center">
+          <a  class="button-small" href="LoginPage.html">Login</a>
+          <a  class="button-small" href="FirstPage.html">Home</a>
+        </div>
+      </div>
+    </div>
+
+    <script type="module">
+      // Import the functions you need from the SDKs you need
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js";
+      // TODO: Add SDKs for Firebase products that you want to use
+      // https://firebase.google.com/docs/web/setup#available-libraries
+
+      // Your web app's Firebase configuration
+      const firebaseConfig = {
+        apiKey: "AIzaSyCO3_sLIR5XeJcWiQ65I2scoeLibxWDCJs",
+        authDomain: "pairemapp.firebaseapp.com",
+        databaseURL: "https://pairemapp-default-rtdb.firebaseio.com",
+        projectId: "pairemapp",
+        storageBucket: "pairemapp.appspot.com",
+        messagingSenderId: "54376945676",
+        appId: "1:54376945676:web:e6b0bc5d80ff975b967629"
+      };
+
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      import {getDatabase, ref, get, set, child, update, remove}
+      from "https://www.gstatic.com/firebasejs/9.17.1/firebase-database.js";
+
+      const database = getDatabase();
+      var submitKey = document.querySelector("#submitKey");
+      var userKey = document.querySelector("#userKey");
+
+      function insert(){
+        set(ref(database,"User/" + userKey.value),{
+          firstName: document.getElementById("firstKey").value,
+          lastName: document.querySelector("#lastKey").value,
+          username: userKey.value,
+          email: document.querySelector("#emailKey").value,
+          phone: document.querySelector("#phoneKey").value,
+          password: document.querySelector("#passKey").value
+        })
+        .then(()=>{
+          alert("You Signed Up");
+        
+        })
+        .catch((error)=>{
+          alert(error);
+        });
+      } 
+
+      submitKey.addEventListener('click',insert);
+
+    </script>
+  </body>
+</html>
